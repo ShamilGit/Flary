@@ -1,0 +1,20 @@
+{
+  "name": "wynntils-accounts",
+  "version": "1.0.0",
+  "description": "Wynntils Account System",
+  "main": "./src/main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "HeyZeer0",
+  "license": "AGPL-3.0",
+  "dependencies": {
+    "bcrypt": "^3.0.4",
+    "body-parser": "^1.18.3",
+    "crypto": "^1.0.1",
+    "express": "^4.16.4",
+    "rethinkdb": "^2.3.3",
+    "sprintf-js": "^1.1.2",
+    "uuid": "^3.3.2"
+  }
+}
