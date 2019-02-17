@@ -16,6 +16,7 @@ server.get("/api/setUserPassword/:apitoken/:token/:pass", require("./routes/api/
 server.get("/api/setAccountType/:apitoken/:token/:type", require("./routes/api/setAccountType").readRequest)
 server.get("/api/updateUserModels/:apitoken/:name/:cape/:elytra/:ears", require("./routes/api/updateUserModels").readRequest)
 
+server.get("/getWynnItemList", require("./routes/getWynnItemList").readRequest)
 server.get("/getUserModelsRoute", require("./routes/getUserModelsRoute").readRequest)
 server.get("/getUsersRoles", require("./routes/getUsersRolesRoute").readRequest)
 server.get("/requestEncryption", require("./routes/requestEncryption").readRequest)
@@ -29,6 +30,7 @@ function startWebServer() {
 
     require("./core/managers/userManager").getAllProfiles()
     require("./core/managers/dayManager").getAllProfiles()
+    require("./core/managers/wynnData").cacheItems()
 
     console.log("\x1b[32m%s\x1b[0m", ">>> WebServer listening on " + config.port)
     console.log(" ")
