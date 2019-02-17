@@ -17,7 +17,7 @@ server.get("/api/setAccountType/:apitoken/:token/:type", require("./routes/api/s
 server.get("/api/updateUserModels/:apitoken/:name/:cape/:elytra/:ears", require("./routes/api/updateUserModels").readRequest)
 
 server.get("/getWynnItemList", require("./routes/getWynnItemList").readRequest)
-server.get("/getUserModelsRoute", require("./routes/getUserModelsRoute").readRequest)
+server.get("/getUserModelsRoute", require("./routes/getUserModels").readRequest)
 server.get("/getUsersRoles", require("./routes/getUsersRolesRoute").readRequest)
 server.get("/requestEncryption", require("./routes/requestEncryption").readRequest)
 server.post("/responseEncryption", require("./routes/responseEncryption").readRequest)
