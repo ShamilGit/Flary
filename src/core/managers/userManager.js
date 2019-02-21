@@ -30,7 +30,7 @@ function registerUser(uuid, name) {
     var up = userProfiles.find(c => c.getId() === uuid.replace("-", ""))
 
     if(up == undefined) {
-        up = new UserProfile(uuid, name, null)
+        up = new UserProfile(uuid, name)
         userProfiles.push(up)
     }
     
