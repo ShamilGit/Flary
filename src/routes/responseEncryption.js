@@ -26,6 +26,7 @@ function readRequest(req, res) {
         const token = profile.updateUserToken()
         var response = new Object()
         response.authtoken = token
+        response.result = "success!"
         response.request = req.requestJson
 
         res.status(200).send(JSON.stringify(response))
