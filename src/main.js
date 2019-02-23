@@ -6,7 +6,7 @@ const server = express()
 const bodyParser = require('body-parser')
 
 //<--------- ROUTES --------->
-server.use(bodyParser.json({type:(op) => {return true}}))
+server.use(bodyParser.json({type:() => {return true}}))
 server.use(require("./routes/middleware/rateLimit").readRequest)
 
 server.get("/api/validToken/:apitoken/:token", require("./routes/api/validTokenRoute").readRequest)

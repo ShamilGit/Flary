@@ -27,6 +27,7 @@ function readRequest(req, res) {
         var response = new Object()
         response.authtoken = token
         response.result = "success!"
+        response.configFiles = profile.getConfigFiles()
         response.request = req.requestJson
 
         res.status(200).send(JSON.stringify(response))

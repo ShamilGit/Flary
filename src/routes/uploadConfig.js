@@ -1,17 +1,20 @@
 const userManager = require("../core/managers/userManager")
+const up = require("../core/profiles/userProfile")
 
 function readRequest(req, res) {
-    if(!req.body || !req.body.fileName || !req.body.base64 || !req.headers["Content-Length"]) {
+    if(!req.body || !req.body.fileName || !req.body.base64) {
         res.status(400).send({"error": "Bad Request, expecting parameters (fileName & base64)"})
         return
     }
 
     //HeyZeer0: This checks the file size
     var response = new Object()
-    if(req.headers["Content-Length"] > 100000) {
-        response.result = "Error! File exceeded 100 kbytes"
-        response.request = req.requestJson
 
+    if(Buffer.byteLength(JSON.stringify(req.body)) >= 10000) {
+        var response = new Object()
+
+        response.result = "Error! The file bypass the limit of 100 kbytes!"
+        response.request = req.requestJson
         res.status(400).send(response)
         return
     }
