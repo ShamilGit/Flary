@@ -22,6 +22,8 @@ class UserProfile {
             this.lastVersions = json.lastVersions
 
             this.activeModels = json.activeModels
+
+            this.configFiles = json.configFiles
             return
         }
 
@@ -34,6 +36,8 @@ class UserProfile {
         this.password = ""
         this.latestVersion = ""
         this.lastVersions = {}
+
+        this.configFiles = {}
 
         this.activeModels = {"capeActive": false, "elytraActive":false, "earsActive":false}
     }
@@ -64,6 +68,16 @@ class UserProfile {
 
     getActiveModels() {
         return this.activeModels
+    }
+
+    getConfigFiles() {
+        return this.configFiles
+    }
+
+    updateConfigFiles(fileName, base64) {
+        this.configFiles[fileName] = base64
+
+        this.save()
     }
 
     updateUserToken() {

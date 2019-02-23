@@ -21,6 +21,7 @@ server.get("/getUserModels", require("./routes/getUserModelsRoute").readRequest)
 server.get("/getUsersRoles", require("./routes/getUsersRolesRoute").readRequest)
 server.get("/requestEncryption", require("./routes/requestEncryption").readRequest)
 server.post("/responseEncryption", require("./routes/responseEncryption").readRequest)
+server.post("/uploadConfig/:token", require("./routes/uploadConfig").readRequest)
 
 server.use((req, res) => {res.status(200).redirect(config.redirectUrl)})
 
