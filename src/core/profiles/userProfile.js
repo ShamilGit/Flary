@@ -106,6 +106,8 @@ class UserProfile {
 
         this.name = name
 
+        if(this.configFiles == undefined) this.configFiles = {}
+
         this.save()
         return true
     }
