@@ -16,7 +16,11 @@ function getAllProfiles()  {
 
 function getCurrentDay() {
     const date = new Date()
-    const dateString = (date.getMonth()+1) + "-" + date.getDate() + "-" + date.getFullYear()
+
+    const month = date.getMonth()+1
+    const day = date.getDate()
+
+    const dateString = (month < 10 ? "0" + month : month) + "-" + (day < 10 ? "0" + day : day) + "-" + date.getFullYear()
     
     var dp = dayProfiles.find(c => c.id === dateString)
     if(dp == undefined) {
