@@ -5,7 +5,8 @@
 <a href="https://github.com/Wynntils/Flary/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-AGLP%203.0-green.svg"></a>
 <a href="https://app.snyk.io/org/heyzeer0/project/a6a6a17f-5e3d-4b2f-9f05-8f419bda81a4"><img src="https://snyk.io/test/github/Wynntils/WynntilsAccountsJS/badge.svg?targetFile=package.json"></a>
 </p>
-# Flary
+
+#Flary
 Flary is the codename of Wynntils Account Management System.<br>
 This project has as base NodeJS, Express and SocketIO. Express handles the webserver and SocketIO the socket connection.<br>
 Flary handles a bunch of data, including all the accounts, every request/response sent via socket.
