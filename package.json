@@ -1,7 +1,7 @@
 {
-  "name": "wynntils-accounts",
+  "name": "flary",
   "version": "1.0.0",
-  "description": "Wynntils Account System",
+  "description": "Wynntils Flary Platform",
   "main": "./src/main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
