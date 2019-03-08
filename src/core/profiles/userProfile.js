@@ -24,6 +24,7 @@ class UserProfile {
             this.activeModels = json.activeModels
 
             this.configFiles = json.configFiles
+            this.discordInfo = json.discordInfo
             return
         }
 
@@ -38,6 +39,7 @@ class UserProfile {
         this.lastVersions = {}
 
         this.configFiles = {}
+        this.discordInfo = {}
 
         this.activeModels = {"capeActive": false, "elytraActive":false, "earsActive":false}
     }
@@ -72,6 +74,16 @@ class UserProfile {
 
     getConfigFiles() {
         return this.configFiles
+    }
+
+    getDiscordInfo() {
+        return this.discordInfo
+    }
+
+    updateDiscordInfo(id, username) {
+        this.discordInfo = {"id": id, "username": username}
+
+        this.save()
     }
 
     updateConfigFiles(fileName, base64) {

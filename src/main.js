@@ -20,6 +20,7 @@ server.get("/getWynnItemList", require("./routes/getWynnItemList").readRequest)
 server.get("/getUserModels", require("./routes/getUserModelsRoute").readRequest)
 server.get("/getUsersRoles", require("./routes/getUsersRolesRoute").readRequest)
 server.get("/requestEncryption", require("./routes/requestEncryption").readRequest)
+server.get("/updateDiscord/:token/:id/:username", require("./routes/updateDiscord").readRequest)
 server.post("/responseEncryption", require("./routes/responseEncryption").readRequest)
 server.post("/uploadConfig/:token", require("./routes/uploadConfig").readRequest)
 
