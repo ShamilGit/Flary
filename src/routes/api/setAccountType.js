@@ -16,7 +16,7 @@ function readRequest(req, res) {
     if(!valid) {
         response.result = "Invalid API Key"
         response.request = req.requestJson
-        res.status(200).send(response)
+        res.status(400).send(response)
         return
     }
 
@@ -35,10 +35,10 @@ function readRequest(req, res) {
     }
 
     var type = req.params.type.toUpperCase()
-    if(type !== "NORMAL" && type !== "MODERATOR" && type !== "HELPER" && type !== "DONATOR") {
-        response.result = "The provided type is invalid, expecting (NORMAL/MODERATOR/HELPER/DONATOR)"
+    if(type !== "NORMAL" && type !== "MODERATOR" && type !== "HELPER" && type !== "DONATOR" && type !== "CONTENT_TEAM") {
+        response.result = "The provided type is invalid, expecting (NORMAL/MODERATOR/HELPER/DONATOR/CONTENT_TEAM)"
         response.request = req.requestJson
-        res.status(200).send(response)
+        res.status(400).send(response)
         return
     }
 

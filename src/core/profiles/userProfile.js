@@ -4,7 +4,7 @@ const uuid = require("uuid/v4")
 const TABLE = "users"
 
 var AccountType = {
-    NORMAL:"NORMAL", DONATOR:"DONATOR", HELPER:"HELPER", MODERATOR:"MODERATOR", BANNED:"BANNED"
+    NORMAL:"NORMAL", DONATOR:"DONATOR", CONTENT_TEAM:"CONTENT_TEAM", HELPER:"HELPER", MODERATOR:"MODERATOR", BANNED:"BANNED"
 }
 
 class UserProfile {
@@ -102,8 +102,6 @@ class UserProfile {
     }
 
     updateAccountType(accountType) {
-        if(this.accountType === AccountType.BANNED) return false
-
         this.accountType = accountType
 
         this.save()
