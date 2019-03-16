@@ -2,6 +2,11 @@ const userManager = require("../core/managers/userManager")
 const up = require("../core/profiles/userProfile")
 
 function readRequest(req, res) {
+    if(!req.body || !req.body.id || !req.body.username) {
+        res.status(400).send({"error": "Bad Request, expecting parameters (id & username)"})
+        return
+    }
+
     var response = new Object()
 
     var user = userManager.getUserProfileByToken(req.params.token)
@@ -12,7 +17,7 @@ function readRequest(req, res) {
     }else if(Object.keys(user.getConfigFiles).length > 30) {
         response.result = "Error! The user has more than 30 uploaded files"
     }else{
-        user.updateDiscordInfo(req.params.id, req.params.username)
+        user.updateDiscordInfo(req.body.id, req.body.username)
         response.result = "Success!"
     }
 

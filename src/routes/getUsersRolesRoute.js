@@ -7,7 +7,6 @@ function readRequest(req, res) {
     var helpers = []
     var moderators = []
     var donators = []
-    var normal = []
     var content_team = []
 
     userManager.userProfiles.forEach(c => {
@@ -15,10 +14,9 @@ function readRequest(req, res) {
         else if(c.getAccountType() == up.AccountType.CONTENT_TEAM) content_team.push(c.getId())
         else if(c.getAccountType() === up.AccountType.MODERATOR) moderators.push(c.getId())
         else if(c.getAccountType() === up.AccountType.DONATOR) donators.push(c.getId())
-        else if(c.getAccountType() === up.AccountType.NORMAL) normal.push(c.getId())
     })
 
-    json.normalUsers = normal
+    json.normalUsers = []
     json.donatorUsers = donators
     json.contentTeamUsers = content_team
     json.helperUsers = helpers
