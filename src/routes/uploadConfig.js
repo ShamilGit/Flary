@@ -2,8 +2,10 @@ const userManager = require("../core/managers/userManager")
 const up = require("../core/profiles/userProfile")
 
 function readRequest(req, res) {
-    if(!req.body || !req.body.fileName || !req.body.base64) {
-        res.status(400).send({"error": "Bad Request, expecting parameters (fileName & base64)"})
+    if(!req.body) {
+        if(!(req.body instanceof Array)) {
+            res.status(400).send({"error": "Bad Request, expecting parameters (array? fileName & base64)"})
+        }
         return
     }
 
@@ -27,8 +29,15 @@ function readRequest(req, res) {
     }else if(Object.keys(user.getConfigFiles).length > 30) {
         response.result = "Error! The user has more than 30 uploaded files"
     }else{
-        user.updateConfigFiles(req.body.fileName, req.body.base64)
-        response.result = "Success!"
+        if(req.body instanceof Array) {
+            req.body.forEach(c => {
+                if(c.fileName && c.base64) user.updateConfigFiles(c.fileName, c.base64)
+            })
+            response.result = "Success!"
+        }else {
+            user.updateConfigFiles(req.body.fileName, req.body.base64)
+            response.result = "Success!"
+        }
     }
 
     response.request = req.requestJson
