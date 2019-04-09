@@ -1,4 +1,4 @@
-const wynnData = require("../core/managers/wynnData")
+const wynnData = require("../../core/managers/wynnData")
 
 function readRequest(req, res) {
     res.status(200).send(wynnData.cachedItems)
