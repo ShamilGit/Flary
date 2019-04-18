@@ -12,11 +12,11 @@ function readRequest(req, res, next) {
     req.requestJson = {"ipAddress":ip, "timestamp" : time}
 
     //global ratelimits
-    if(isRateLimited("global", main.config.ratelimit.global, time)) {
+    /*if(isRateLimited("global", main.config.ratelimit.global, time)) {
         res.status(429).send({"error": "You're being ratelimited!"})
         dayManager.getCurrentDay().updateDdos()
         return
-    }
+    }*/
 
     //user ratelimits below
     if(isRateLimited(ip, main.config.ratelimit.user, time)) {
