@@ -27,7 +27,6 @@ function getTerritoryCache() {
     var time = new Date().getTime()
 
     if(time - lastTerritoryCache >= 30000) {
-        console.log("\x1b[36m%s\x1b[0m", `[CCHE] Updating territory list - ${time}`)
         lastTerritoryCache = time
         https.get(TERRITORY_URL, (resp) => {
             var data = ""
