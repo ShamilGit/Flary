@@ -86,8 +86,8 @@ class UserProfile {
         this.save()
     }
 
-    updateConfigFiles(fileName, base64) {
-        this.configFiles[fileName] = base64
+    updateConfigFiles(files) {
+        files.forEach(element => {this.configFiles[element.fileName] = element.base64});
 
         this.save()
     }

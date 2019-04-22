@@ -21,7 +21,7 @@ function readRequest(req, res) {
 	}
 
 	var filesToUpload = getCorrectFiles(req.body)
-	if(filesToUpload.length == 0) { //checks if the request is correct
+	if(filesToUpload == null || filesToUpload.length == 0) { //checks if the request is correct
 		res.status(400).send({"error": "Bad Request, expecting parameters (array? fileName & base64 <= 10kb/v)"})
 		return
 	}
@@ -37,7 +37,8 @@ function readRequest(req, res) {
 	} else if ((Object.keys(user.getConfigFiles()) + filesToUpload.length) > 30) {
 		response.result = 'Error! The user has more than 30 uploaded files';
 	} else {
-		filesToUpload.forEach(c => user.updateConfigFiles(c.fileName, c.base64))
+		user.updateConfigFiles(filesToUpload)
+
 		response.result = 'Success!';
 	}
 
