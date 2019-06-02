@@ -15,6 +15,7 @@ server.get("/api/getUserByPassword/:apitoken/:name/:pass", require("./routes/api
 server.get("/api/setUserPassword/:apitoken/:token/:pass", require("./routes/api/setUserPassword").readRequest)
 server.get("/api/setAccountType/:apitoken/:token/:type", require("./routes/api/setAccountType").readRequest)
 server.get("/api/updateUserModels/:apitoken/:name/:cape/:elytra/:ears", require("./routes/api/updateUserModels").readRequest)
+server.post("/api/setGuildColor/:apitoken", require("./routes/api/setGuildColor").readRequest)
 
 server.get("/cache/getItemList", require("./routes/cache/getItemList").readRequest)
 server.get("/cache/getTerritoryList", require("./routes/cache/getTerritoryList").readRequest)

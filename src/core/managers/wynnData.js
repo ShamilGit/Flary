@@ -13,6 +13,7 @@ var scyuTerritories = null
 var lastTerritoryCache = 0
 
 var guildList = null
+var guildColors = null
 
 function cacheItems() {
     https.get(ITEM_URL, (resp) => {
@@ -41,6 +42,29 @@ function getTerritoryCache() {
     return territoryCache
 }
 
+function setGuildColor(guild, color) {
+    guildColors[guild] = color
+
+    fs.writeFileSync("data/guild_colors.json", JSON.stringify(guildColors))
+}
+
+function getGuildColor(guild) {
+   if(guild === null) return null
+   
+   if(guildColors === null) {
+       if(fs.existsSync("data/guild_colors.json")) {
+           var rawData = fs.readFileSync("data/guild_colors.json")
+           guildColors = JSON.parse(rawData)
+       }else{
+           guildColors = {}
+
+           fs.writeFileSync("data/guild_colors.json", JSON.stringify(guildColors))
+       }
+   }
+
+   return guildColors[guild] == undefined ? null : guildColors[guild]
+}
+
 function getGuildPrefix(guild) {
     if(guild === null) return null
 
@@ -51,7 +75,6 @@ function getGuildPrefix(guild) {
         }else{
             guildList = {}
 
-            fs.mkdirSync("data", {recursive: true})
             fs.writeFileSync("data/guilds.json", JSON.stringify(guildList))
         }
     }
@@ -137,7 +160,8 @@ function updateTerritories() {
             var final = {
                 "territory": wynn["territory"],
                 "guild": wynn["guild"],
-                "prefix": getGuildPrefix(wynn["guild"]),
+                "guildPrefix": getGuildPrefix(wynn["guild"]),
+                "guildColor": getGuildColor(wynn["guild"]),
                 "acquired": wynn["acquired"],
                 "attacker": wynn["attacker"],
                 "level": scyu["level"],
@@ -154,3 +178,4 @@ function updateTerritories() {
 module.exports.cacheItems = cacheItems
 module.exports.getTerritoryCache = getTerritoryCache
 module.exports.cachedItems = cachedItems
+module.exports.setGuildColor = setGuildColor
