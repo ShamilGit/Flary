@@ -1,11 +1,18 @@
 const ITEM_URL = "https://api.wynncraft.com/public_api.php?action=itemDB&category=all"
 const TERRITORY_URL = "https://api.wynncraft.com/public_api.php?action=territoryList"
+const SCYU_TERRITORIES = "https://raw.githubusercontent.com/DevScyu/Wynn/master/territories.json"
+const GUILD_INFO = "https://api.wynncraft.com/public_api.php?action=guildStats&command="
+
 const https = require("https")
+const fs = require("fs")
 
 var cachedItems = {"items":[]}
-var territoryCache = {}
 
+var territoryCache = {}
+var scyuTerritories = null
 var lastTerritoryCache = 0
+
+var guildList = null
 
 function cacheItems() {
     https.get(ITEM_URL, (resp) => {
@@ -28,24 +35,121 @@ function getTerritoryCache() {
 
     if(time - lastTerritoryCache >= 30000) {
         lastTerritoryCache = time
-        https.get(TERRITORY_URL, (resp) => {
+        updateTerritories()
+    }
+
+    return territoryCache
+}
+
+function getGuildPrefix(guild) {
+    if(guild === null) return null
+
+    if(guildList === null) {
+        if(fs.existsSync("data/guilds.json")) {
+            var rawData = fs.readFileSync("data/guilds.json")
+            guildList = JSON.parse(rawData)
+        }else{
+            guildList = {}
+
+            fs.mkdirSync("data", {recursive: true})
+            fs.writeFileSync("data/guilds.json", JSON.stringify(guildList))
+        }
+    }
+
+    var result = guildList[guild]
+    if(result === undefined) {
+        https.get(GUILD_INFO + guild, (resp) => {
             var data = ""
 
             resp.on("data", (chunk) => {
-                data+= chunk
+                data += chunk
             })
 
             resp.on("end", () => {
-                if(data == "") return "{}"
+                if(data == "") return
 
-                this.territoryCache = JSON.parse(data)
+                guildList[guild] = JSON.parse(data)["prefix"]
+
+                fs.writeFileSync("data/guilds.json", JSON.stringify(guildList))
             })
         })
     }
 
-    return this.territoryCache
+    if(result === undefined) return null
+    return result
 }
 
+function updateTerritories() {
+    if(scyuTerritories === null) {
+        https.get(SCYU_TERRITORIES, (resp) => {
+            var data = ""
+
+            resp.on("data", (chunk) => {
+                data += chunk
+            })
+
+            resp.on("end", () => {
+                if(data == "") return
+
+                scyuTerritories = JSON.parse(data)
+                getWynnTerritories()
+            })
+        })
+    }else { getWynnTerritories() }
+
+    var wynnTerritories = {}
+
+    function getWynnTerritories() {
+        https.get(TERRITORY_URL, (resp) => {
+            var data = ""
+
+            resp.on("data", (chunk) => {
+                data += chunk
+            })
+
+            resp.on("end", () => {
+                if(data == "") return
+
+                wynnTerritories = JSON.parse(data)
+                mergeData()
+            })
+        })
+    }
+
+    function mergeData() {
+        var finalData = {}
+        for(var index in scyuTerritories) {
+            var scyu = scyuTerritories[index]
+
+            var wynn = wynnTerritories["territories"][scyu["name"]]
+
+            var start = scyu["start"].split(",")
+            var end = scyu["end"].split(",")
+
+            var location = {
+                "startX": parseInt(start[0]),
+                "startY": parseInt(start[1]),
+                "endX": parseInt(end[0]),
+                "endY": parseInt(end[1]),
+                "spawn": scyu["spawnLocation"]
+            }
+
+            var final = {
+                "territory": wynn["territory"],
+                "guild": wynn["guild"],
+                "prefix": getGuildPrefix(wynn["guild"]),
+                "acquired": wynn["acquired"],
+                "attacker": wynn["attacker"],
+                "level": scyu["level"],
+                "location": location
+            }
+
+            finalData[wynn["territory"]] = final
+        }
+
+        territoryCache = {"territories": finalData}
+    }
+}
 
 module.exports.cacheItems = cacheItems
 module.exports.getTerritoryCache = getTerritoryCache
