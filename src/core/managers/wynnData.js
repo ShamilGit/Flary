@@ -134,17 +134,23 @@ function updateTerritories() {
                 if(data == "") return
 
                 wynnTerritories = JSON.parse(data)
+                if(wynnTerritories === {}) return
+
                 mergeData()
             })
         })
     }
 
     function mergeData() {
+        if(wynnTerritories === {}) return
+        
         var finalData = {}
+
         for(var index in scyuTerritories) {
             var scyu = scyuTerritories[index]
 
             var wynn = wynnTerritories["territories"][scyu["name"]]
+            if(typeof wynn === "undefined") return
 
             var start = scyu["start"].split(",")
             var end = scyu["end"].split(",")
