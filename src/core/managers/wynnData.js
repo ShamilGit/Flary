@@ -134,7 +134,7 @@ function updateTerritories() {
                 if(data == "") return
 
                 wynnTerritories = JSON.parse(data)
-                if(wynnTerritories === {}) return
+                if(wynnTerritories["territories"] === undefined) return
 
                 mergeData()
             })
@@ -142,8 +142,8 @@ function updateTerritories() {
     }
 
     function mergeData() {
-        if(wynnTerritories === {}) return
-        
+        if(wynnTerritories["territories"] === undefined) return
+
         var finalData = {}
 
         for(var index in scyuTerritories) {
