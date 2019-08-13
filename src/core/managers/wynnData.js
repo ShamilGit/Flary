@@ -2,11 +2,13 @@ const ITEM_URL = "https://api.wynncraft.com/public_api.php?action=itemDB&categor
 const TERRITORY_URL = "https://api.wynncraft.com/public_api.php?action=territoryList"
 const SCYU_TERRITORIES = "https://raw.githubusercontent.com/DevScyu/Wynn/master/territories.json"
 const GUILD_INFO = "https://api.wynncraft.com/public_api.php?action=guildStats&command="
+const MAP_LOCATIONS_URL = "https://api.wynncraft.com/public_api.php?action=mapLocations"
 
 const https = require("https")
 const fs = require("fs")
 
 var cachedItems = {"items":[]}
+var mapLocations = {"locations":[]}
 
 var territoryCache = {}
 var scyuTerritories = null
@@ -16,6 +18,22 @@ var guildList = null
 var guildColors = null
 
 function cacheItems() {
+    https.get(MAP_LOCATIONS_URL, (resp) => {
+        var data = ""
+
+        resp.on("data", (chunk) => {
+             data += chunk
+        })
+
+        resp.on("end", () => {
+            if(data == "") return
+
+            this.mapLocations = JSON.parse(data)
+        })
+    })
+}
+
+function cacheMapLocations() {
     https.get(ITEM_URL, (resp) => {
         var data = ""
 
@@ -185,3 +203,5 @@ module.exports.cacheItems = cacheItems
 module.exports.getTerritoryCache = getTerritoryCache
 module.exports.cachedItems = cachedItems
 module.exports.setGuildColor = setGuildColor
+module.exports.cacheMapLocations = cacheMapLocations
+module.exports.mapLocations = mapLocations

@@ -18,6 +18,7 @@ server.get("/api/updateUserModels/:apitoken/:name/:cape/:elytra/:ears", require(
 server.post("/api/setGuildColor/:apitoken", require("./routes/api/setGuildColor").readRequest)
 
 server.get("/cache/getItemList", require("./routes/cache/getItemList").readRequest)
+server.get("/cache/getMapLocations", require("./routes/cache/getMapLocations").readRequest)
 server.get("/cache/getTerritoryList", require("./routes/cache/getTerritoryList").readRequest)
 
 server.get("/getUserModels", require("./routes/getUserModelsRoute").readRequest)
@@ -36,6 +37,7 @@ function startWebServer() {
     require("./core/managers/userManager").getAllProfiles()
     require("./core/managers/dayManager").getAllProfiles()
     require("./core/managers/wynnData").cacheItems()
+    require("./core/managers/wynnData").cacheMapLocations()
 
     console.log("\x1b[32m%s\x1b[0m", ">>> WebServer listening on " + config.port)
     console.log(" ")
